@@ -25,3 +25,10 @@ Route::group(['middleware' => 'auth'], function(){
     
     Route::get('actionlogout', [LoginsController::class, 'actionlogout'])->name('actionlogout');
 });
+
+Route::get('/sidebar', function(){
+    return view('sidebar');
+});
+
+Route::get('checkbox', [EmployeeController::class, 'checkboxpage']);
+Route::post('checkbox', [EmployeeController::class, 'insertcheckbox']);

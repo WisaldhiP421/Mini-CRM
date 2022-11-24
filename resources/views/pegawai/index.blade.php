@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -52,9 +51,43 @@
           <img src="img/download.png" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Admin</a>
+          <h5 class="text-light">Admin</h5>
         </div>
       </div>
+
+      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <!-- Add icons to the links using the .nav-icon class
+             with font-awesome or any other icon font library -->
+        <li class="nav-item has-treeview">
+          <a href="#" class="nav-link">
+            <i class="bi bi-card-text"></i>
+            <span class="mx-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-card-text" viewBox="0 0 16 16">
+                <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
+                <path d="M3 5.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8zm0 2.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z"/>
+              </svg>
+            </span>
+            <p>
+              Tables
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{{ route('company.index') }}" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <span>Companies</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ route('pegawai.index') }}" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <span>Employees</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
 
       <!-- Sidebar Menu -->
       <nav class="mt-2">
@@ -78,21 +111,6 @@
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper p-5">
     <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1>Employees Table</h1>
-          </div>
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li><a class="btn btn-outline-primary m-1" href="{{ route('pegawai.index') }}">Employees Table</a></li>
-              <li><a class="btn btn-outline-secondary m-1" href="{{ route('company.index') }}">Companies Table</a></li>
-            </ol>
-          </div>
-        </div>
-      </div>
-    </section>
 
         @if (session('status'))
             <div class="result">
@@ -111,6 +129,8 @@
                   <th>Company Name</th>
                   <th>Email</th>            
                   <th>Phone</th>  
+                  <th>Gender</th>
+                  <th>Hobby</th>
                   <th></th> 
                 </tr>
             </thead>
@@ -122,6 +142,8 @@
                       <td>{{ $item->company->name }}</td>
                       <td>{{ $item->email }}</td>
                       <td>{{ $item->no_hp }}</td>
+                      <td>{{ $item->gender }}</td>
+                      <td>{{ $item->hobby }}</td>
                       <td><button type="button" class="btn btn-warning btn-edit"
                                 data-url={{ route('pegawai.getPegawai', ['id' => $item->id]) }} data-toggle="modal"
                                   data-target="#modalEdit">
@@ -171,18 +193,95 @@
                         </div>
                       </div>
                       <div class="form-group row">
-                          <label for="no_hp" class="col-sm-3 col-form-label">No Hp</label>
-                          <div class="col-sm-9">
-                              <input type="text" class="form-control" name="no_hp" id="no_hp" placeholder="" value="">
-                          </div>
+                        <label for="no_hp" class="col-sm-3 col-form-label">No Hp</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control" name="no_hp" id="no_hp" placeholder="" value="">
+                        </div>
                       </div>
+
+
+                      <div class="form-group row">
+                        <label for="gender" class="col-sm-3 form-label">Gender</label>
+                        <div class="col-sm-9">
+                          <div class="form-check form-check-inline mr-3">
+                            <input type="radio" class="form-check-input" name="gender" id="male" value="male">
+                            <label for="male" class="form-check-label">Male</label>
+                          </div>
+                          <div class="form-check form-check-inline mx-3">
+                            <input type="radio" class="form-check-input" name="gender" id="female" value="female">
+                            <label for="female" class="form-check-label">Female</label>
+                          </div>
+                        </div>
+                      </div>
+
+
+                      <div class="form-group row">
+                        <label for="hobby" class="col-sm-3 form-label">Hobby</label>
+                        <div class="col-sm-9">
+                          <div class="form-check form-check-inline">
+                            <input type="checkbox" class="form-check-input" name="hobby[]" id="hobby" value="Travelling">
+                            <label for="hobby" class="form-check-label">Travelling</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input type="checkbox" class="form-check-input" name="hobby[]" id="hobby" value="Swimming">
+                            <label for="hobby" class="form-check-label">Swimming</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input type="checkbox" class="form-check-input" name="hobby[]" id="hobby" value="Reading">
+                            <label for="hobby" class="form-check-label">Reading</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input type="checkbox" class="form-check-input" name="hobby[]" id="hobby" value="Cooking">
+                            <label for="hobby" class="form-check-label">Cooking</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input type="checkbox" class="form-check-input" name="hobby[]" id="hobby" value="Photography">
+                            <label for="hobby" class="form-check-label">Photography</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input type="checkbox" class="form-check-input" name="hobby[]" id="hobby" value="Singing">
+                            <label for="hobby" class="form-check-label">Singing</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input type="checkbox" class="form-check-input" name="hobby[]" id="hobby" value="Dancing">
+                            <label for="hobby" class="form-check-label">Dancing</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input type="checkbox" class="form-check-input" name="hobby[]" id="hobby" value="Gardening">
+                            <label for="hobby" class="form-check-label">Gardening</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input type="checkbox" class="form-check-input" name="hobby[]" id="hobby" value="Watching">
+                            <label for="hobby" class="form-check-label">Watching</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input type="checkbox" class="form-check-input" name="hobby[]" id="hobby" value="Painting">
+                            <label for="hobby" class="form-check-label">Painting</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input type="checkbox" class="form-check-input" name="hobby[]" id="hobby" value="Cycling">
+                            <label for="hobby" class="form-check-label">Cycling</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input type="checkbox" class="form-check-input" name="hobby[]" id="hobby" value="Self Defense">
+                            <label for="hobby" class="form-check-label">Self Defense</label>
+                          </div>
+                          </div>
+                        </div>
+
                         <div class="form-group row">
-                          <label>Company</label>
-                            <select class="form-control" name="user_id">
+                          <div class="col-sm-3">
+                            <label>Company</label>
+                          </div>
+                          <div class="col-sm-9">
+                            <select class="custom-select" name="user_id">
+                              <option selected>Open this select menu</option>
                               @foreach ($company as $item)
                                   <option value="{{ $item->id }}">{{ $item->name }}</option>
                               @endforeach
                             </select>
+
+                          </div>
                       </div>  
                     </div>
                     <div class="modal-footer">
@@ -230,6 +329,73 @@
                           <div class="col-sm-9">
                               <input type="text" class="form-control" name="no_hp" id="no_hp" placeholder="" value="">
                           </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="gender" class="col-sm-4 form-label">Gender</label>
+                        <div class="col-sm-8">
+                          <div class="form-check form-check-inline">
+                            <input type="radio" class="form-check-input gender" name="gender" id="male" value="male">
+                            <label for="male" class="form-check-label">Male</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input type="radio" class="form-check-input gender" name="gender" id="female" value="female">
+                            <label for="female" class="form-check-label">Female</label>
+                          </div>
+
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="hobby" class="col-sm-4 form-label">Hobby</label>
+                        <div class="col-sm-8">
+                          <div class="form-check form-check-inline">
+                            <input type="checkbox" class="form-check-input" name="hobby[]" id="hobby" value="Travelling">
+                            <label for="hobby" class="form-check-label">Travelling</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input type="checkbox" class="form-check-input" name="hobby[]" id="hobby" value="Swimming">
+                            <label for="hobby" class="form-check-label">Swimming</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input type="checkbox" class="form-check-input" name="hobby[]" id="hobby" value="Reading">
+                            <label for="hobby" class="form-check-label">Reading</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input type="checkbox" class="form-check-input" name="hobby[]" id="hobby" value="Cooking">
+                            <label for="hobby" class="form-check-label">Cooking</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input type="checkbox" class="form-check-input" name="hobby[]" id="hobby" value="Photography">
+                            <label for="hobby" class="form-check-label">Photography</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input type="checkbox" class="form-check-input" name="hobby[]" id="hobby" value="Singing">
+                            <label for="hobby" class="form-check-label">Singing</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input type="checkbox" class="form-check-input" name="hobby[]" id="hobby" value="Dancing">
+                            <label for="hobby" class="form-check-label">Dancing</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input type="checkbox" class="form-check-input" name="hobby[]" id="hobby" value="Gardening">
+                            <label for="hobby" class="form-check-label">Gardening</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input type="checkbox" class="form-check-input" name="hobby[]" id="hobby" value="Watching">
+                            <label for="hobby" class="form-check-label">Watching</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input type="checkbox" class="form-check-input" name="hobby[]" id="hobby" value="Painting">
+                            <label for="hobby" class="form-check-label">Painting</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input type="checkbox" class="form-check-input" name="hobby[]" id="hobby" value="Cycling">
+                            <label for="hobby" class="form-check-label">Cycling</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input type="checkbox" class="form-check-input" name="hobby[]" id="hobby" value="Self Defense">
+                            <label for="hobby" class="form-check-label">Self Defense</label>
+                          </div>
+                        </div>
                       </div>
                         <div class="form-group row">
                           <label>Company</label>
@@ -295,6 +461,8 @@
       $('#modalEdit #lname').val('')
       $('#modalEdit #email').val('')
       $('#modalEdit #no_hp').val('')
+      $('#modalEdit .gender').prop('checked', false);
+      $('#modalEdit .hobby').prop('checked', false);
       $('#modalEdit #user_id').val('')
       $.ajax({
           type: "get",
@@ -307,6 +475,13 @@
               $('#modalEdit #email').val(res['email'])
               $('#modalEdit #no_hp').val(res['no_hp'])
               $('#modalEdit #user_id').val(res['user_id'])
+              
+              $.each(res['hobby'],function(key,hobby){
+                $(`input[value="${hobby}"]`).prop('checked', true);
+                
+              })
+      
+              $(`input[value="${res['gender']}"]`).prop('checked', true);
           }
       });
   });

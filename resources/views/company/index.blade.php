@@ -56,6 +56,40 @@
         </div>
       </div>
 
+      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <!-- Add icons to the links using the .nav-icon class
+             with font-awesome or any other icon font library -->
+        <li class="nav-item has-treeview">
+          <a href="#" class="nav-link">
+            <i class="bi bi-card-text"></i>
+            <span class="mx-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-card-text" viewBox="0 0 16 16">
+                <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
+                <path d="M3 5.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8zm0 2.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5z"/>
+              </svg>
+            </span>
+            <p>
+              Tables
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{{ route('company.index') }}" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Companies</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ route('pegawai.index') }}" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Employees</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+
       <!-- Sidebar Menu -->
           <div class="container">
             <button class="btn btn-danger" style="float: left;
@@ -73,21 +107,6 @@
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper p-5">
     <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1>Companies Table</h1>
-          </div>
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-                <li><a class="btn btn-outline-secondary m-1" href="{{ route('pegawai.index') }}">Employees Table</a></li>
-                <li><a class="btn btn-outline-primary m-1" href="{{ route('company.index') }}">Companies Table</a></li>
-            </ol>
-          </div>
-        </div>
-      </div>
-    </section>
 
         @if (session('status'))
             <div class="result">
@@ -158,10 +177,13 @@
                               <input type="email" class="form-control" name="email" id="email" placeholder="" value="">
                           </div>
                       </div>
-                      <div class="mb-3">
-                        <label for="logo" class="form-label">Default file input example</label>
-                        <input class="form-control" type="file" id="logo" name="logo">
+                      <div class="form-group row">
+                        <label for="logo" class="col-sm-3 col-form-label">Company Logo</label>
+                        <div class="col-sm-9">
+                          <input class="form-control" type="file" id="logo" name="logo">
+                        </div>
                       </div>
+
                         <div class="form-group row">
                             <label for="website" class="col-sm-3 col-form-label">Website</label>
                             <div class="col-sm-9">

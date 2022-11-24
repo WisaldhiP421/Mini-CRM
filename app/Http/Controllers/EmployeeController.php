@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Company;
 use App\Models\Employee;
+use App\Models\Checkbox;
 
 
 class EmployeeController extends Controller
@@ -32,11 +33,16 @@ class EmployeeController extends Controller
      */
     public function create(Request $req)
     {
+        if(!empty($req->input('hobby'))){
+            $checkbox = join(', ', $req->input('hobby'));
+        }
         $pegawai = Employee::create([
             'fname' => $req->fname,
             'lname' => $req->lname,
             'email' => $req->email,
             'no_hp' => $req->no_hp,
+            'gender' => $req->gender,
+            'hobby' => $checkbox,
             'user_id' => $req->user_id,
             
         ]);
@@ -52,11 +58,16 @@ class EmployeeController extends Controller
      */
     public function update(Request $req)
     {
+        if(!empty($req->input('hobby'))){
+            $checkbox = join(', ', $req->input('hobby'));
+        }
         $pegawai = Employee::where('id', $req->id)->update([
             'fname' => $req->fname,
             'lname' => $req->lname,
             'email' => $req->email,
             'no_hp' => $req->no_hp,
+            'gender' => $req->gender,
+            'hobby' => $checkbox,
             'user_id' => $req->user_id,
            
         ]);
@@ -74,6 +85,8 @@ class EmployeeController extends Controller
     public function getPegawai($id)
     {
         $pegawai = Employee::find($id);
+        $hobby = explode(', ', $pegawai->hobby);
+        $pegawai->hobby = $hobby;
 
         return json_encode($pegawai);
 

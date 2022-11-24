@@ -19,6 +19,8 @@ class CreateEmployeeTable extends Migration
             $table->string('lname');
             $table->string('email');
             $table->bigInteger('no_hp');
+            $table->string('gender');
+            $table->string('hobby');
             $table->timestamps();
 
             $table->unsignedBigInteger('user_id');

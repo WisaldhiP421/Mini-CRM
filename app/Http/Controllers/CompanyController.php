@@ -9,10 +9,11 @@ use Illuminate\Support\Facades\Storage;
 class CompanyController extends Controller
 {
     public function index(){
+        $title = 'Companies';
         $company = Company::all();
         return view('company.index', [
             'company' => $company
-        ]);
+        ], compact('title'));
     }
 
     public function create(Request $req){

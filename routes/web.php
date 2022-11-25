@@ -25,7 +25,3 @@ Route::group(['middleware' => 'auth'], function(){
     
     Route::get('actionlogout', [LoginsController::class, 'actionlogout'])->name('actionlogout');
 });
-
-Route::get('/sidebar', function(){
-    return view('sidebar');
-});
